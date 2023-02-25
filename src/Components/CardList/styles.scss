@@ -1,0 +1,14 @@
+.slick-arrow {
+  display: none !important;
+}
+
+.slick-slider {
+  width: 100%;
+  .slick-list {
+    width: 100%;
+    overflow: hidden;
+    .slick-track {
+      display: flex;
+    }
+  }
+}
