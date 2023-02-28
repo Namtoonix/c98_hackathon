@@ -73,8 +73,6 @@ function FormCreate() {
     },
   });
 
-  console.log("listCreatedProjects", listCreatedProjects);
-
   const container: any = useRef();
 
   const handleCreateProject = () => {
@@ -152,20 +150,20 @@ function FormCreate() {
             </div>
 
             <div className="container__form container--signin">
-              <CardList />
+              <CardList cards={listCreatedProjects || []} />
             </div>
 
             <div className="container__overlay">
               <div className="overlay">
                 <div className="overlay__panel overlay--left">
                   <button className="btn" onClick={handleCreateProject}>
-                    Create Project
+                    View Project
                   </button>
                 </div>
 
                 <div className="overlay__panel overlay--right">
                   <button className="btn" onClick={handleViewProject}>
-                    View Project
+                    Create Project
                   </button>
                 </div>
               </div>
