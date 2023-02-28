@@ -39,8 +39,8 @@ function FormCreate() {
     args: [
       projectData.name,
       projectData.description,
-      projectData.amountPerson,
       projectData.totalPrice,
+      projectData.amountPerson,
     ],
   });
 
