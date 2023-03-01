@@ -1,22 +1,19 @@
-import { ethers } from "ethers";
-import { formatNumberView } from "../../hooks";
-import image from "../../assets/images/shibainu.jpeg";
-import "./styles.scss";
 import { useEffect, useState } from "react";
+import { useAccount } from "wagmi";
 import Web3 from "web3";
-import { useContractWrite, usePrepareContractWrite, useAccount } from "wagmi";
-import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../../constant";
+import image from "../../assets/images/shibainu.jpeg";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../constant";
+import { formatNumberView } from "../../hooks";
+import { toast } from "react-toastify";
+
+import "./styles.scss";
 
 declare const window: any;
 
 function CardProject(props: any) {
   const { data } = props;
 
-  console.log(data)
-
   const { address } = useAccount();
-
-  console.log(address);
 
   const web3 = new Web3(window.ethereum);
 
@@ -58,14 +55,12 @@ function CardProject(props: any) {
   // } = useContractWrite(configLong);
 
   const handleInvest = async () => {
-    if(data.seler === address) {
-      console.log("Error")
-      return
-    }else if(
-      data.contributePerson === data.amountPerson
-    ){
-      console.log("Enough people")
-      return
+    if (data.seler === address) {
+      toast.error("Owner can't join!");
+      return;
+    } else if (data.contributePerson === data.amountPerson) {
+      toast.error("The project is full of people!");
+      return;
     }
     await contract.methods
       //investProject(projectId, price)
@@ -77,39 +72,41 @@ function CardProject(props: any) {
   };
 
   return (
-    <article className="team-card">
-      <div className="team-card__img-box">
-        <img
-          className="team-card__img"
-          src={image}
-          alt="Close-Up Photography of Giraffe"
-        />
-      </div>
-      <div className="team-card__content">
-        <hgroup className="team-card__intro">
-          <h3 className="team-card__title">{data.name}</h3>
-        </hgroup>
-        <p className="team-card__desc">{data.description}</p>
-        <p className="team-card__mail">
-          Total: <span>{formatNumberView(data.totalPrice)} BNB</span>
-        </p>
-        <p className="team-card__mail">
-          Max person: <span>{formatNumberView(data.amountPerson)}</span>
-        </p>
-        {/* <p className="team-card__mail">
+    <>
+      <article className="team-card">
+        <div className="team-card__img-box">
+          <img
+            className="team-card__img"
+            src={image}
+            alt="Close-Up Photography of Giraffe"
+          />
+        </div>
+        <div className="team-card__content">
+          <hgroup className="team-card__intro">
+            <h3 className="team-card__title">{data.name}</h3>
+          </hgroup>
+          <p className="team-card__desc">{data.description}</p>
+          <p className="team-card__mail">
+            Total: <span>{formatNumberView(data.totalPrice)} BNB</span>
+          </p>
+          <p className="team-card__mail">
+            Max person: <span>{formatNumberView(data.amountPerson)}</span>
+          </p>
+          {/* <p className="team-card__mail">
           Contributed person: <span>{formatNumberView(data.contributePerson)}</span>
         </p>
         <p className="team-card__mail">
           Contributed BNB : <span>{formatNumberView(data.contributePrice / 1e18)} BNB</span>
         </p> */}
-        <button
-          className="team-card__btn primary-btn"
-          onClick={() => handleInvest()}
-        >
-          Vote
-        </button>
-      </div>
-    </article>
+          <button
+            className="team-card__btn primary-btn"
+            onClick={() => handleInvest()}
+          >
+            Vote
+          </button>
+        </div>
+      </article>
+    </>
   );
 }
 

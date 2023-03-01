@@ -3,7 +3,6 @@ import "./styles.scss";
 import CardList from "../CardList";
 import {
   useAccount,
-  useConnect,
   useContractRead,
   useContractWrite,
   usePrepareContractWrite,
@@ -11,6 +10,7 @@ import {
 } from "wagmi";
 import CustomConnnectButton from "../CustomConnectButton";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../../constant";
+import { toast } from "react-toastify";
 
 interface ProjectDataI {
   name: string;
@@ -42,6 +42,9 @@ function FormCreate() {
       projectData.totalPrice,
       projectData.amountPerson,
     ],
+    onSuccess() {
+      toast.success("Project initialization successful!");
+    },
   });
 
   const {
