@@ -1,7 +1,8 @@
 .form__title {
-  font-weight: 300;
+  font-weight: 500;
   margin: 0;
   margin-bottom: 1.25rem;
+  font-size: 1.6rem;
 }
 
 .link {
@@ -37,7 +38,7 @@
   z-index: 2;
   display: flex;
   align-items: center;
-  overflow: hidden;;
+  overflow: hidden;
 }
 
 .container.right-panel-active .container--signin {
@@ -138,6 +139,44 @@
   font-weight: bold;
   letter-spacing: 0.1rem;
   padding: 0.9rem 4rem;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+.btn-setting {
+  background-color: var(--blue);
+  background-image: linear-gradient(
+    90deg,
+    var(--blue) 0%,
+    var(--lightblue) 74%
+  );
+  border-radius: 20px;
+  border: 1px solid var(--blue);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  padding: 0.4rem 1rem;
+  text-transform: uppercase;
+  transition: transform 80ms ease-in;
+}
+
+.btn-connect-top {
+  background-color: var(--blue);
+  background-image: linear-gradient(
+    90deg,
+    var(--blue) 0%,
+    var(--lightblue) 74%
+  );
+  border-radius: 20px;
+  border: 1px solid var(--blue);
+  color: var(--white);
+  cursor: pointer;
+  font-size: 0.8rem;
+  font-weight: bold;
+  letter-spacing: 0.1rem;
+  padding: 0.5rem 2rem;
   text-transform: uppercase;
   transition: transform 80ms ease-in;
 }
