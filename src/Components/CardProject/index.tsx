@@ -92,12 +92,12 @@ function CardProject(props: any) {
           <p className="team-card__mail">
             Max person: <span>{formatNumberView(data.amountPerson)}</span>
           </p>
-          {/* <p className="team-card__mail">
+          <p className="team-card__mail">
           Contributed person: <span>{formatNumberView(data.contributePerson)}</span>
         </p>
         <p className="team-card__mail">
           Contributed BNB : <span>{formatNumberView(data.contributePrice / 1e18)} BNB</span>
-        </p> */}
+        </p>
           <button
             className="team-card__btn primary-btn"
             onClick={() => handleInvest()}
