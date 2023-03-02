@@ -11,7 +11,7 @@ import "./styles.scss";
 declare const window: any;
 
 function CardProject(props: any) {
-  const { data } = props;
+  const { data, className } = props;
 
   const { address } = useAccount();
 
@@ -73,7 +73,7 @@ function CardProject(props: any) {
 
   return (
     <>
-      <article className="team-card">
+      <article className={`team-card ${className}`}>
         <div className="team-card__img-box">
           <img
             className="team-card__img"
@@ -92,12 +92,14 @@ function CardProject(props: any) {
           <p className="team-card__mail">
             Max person: <span>{formatNumberView(data.amountPerson)}</span>
           </p>
-          {/* <p className="team-card__mail">
-          Contributed person: <span>{formatNumberView(data.contributePerson)}</span>
-        </p>
-        <p className="team-card__mail">
-          Contributed BNB : <span>{formatNumberView(data.contributePrice / 1e18)} BNB</span>
-        </p> */}
+          <p className="team-card__mail">
+            Contributed person:{" "}
+            <span>{formatNumberView(data.contributePerson)}</span>
+          </p>
+          <p className="team-card__mail">
+            Contributed BNB :{" "}
+            <span>{formatNumberView(data.contributePrice / 1e18)} BNB</span>
+          </p>
           <button
             className="team-card__btn primary-btn"
             onClick={() => handleInvest()}
