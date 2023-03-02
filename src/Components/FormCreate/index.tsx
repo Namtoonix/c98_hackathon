@@ -42,9 +42,9 @@ function FormCreate() {
       projectData.totalPrice,
       projectData.amountPerson,
     ],
-    onSuccess() {
-      toast.success("Project initialization successful!");
-    },
+    // onSuccess() {
+    //   toast.success("Project initialization successful!");
+    // },
   });
 
   const {
