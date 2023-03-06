@@ -1,38 +1,33 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EffectCallback, useContext, useEffect } from "react";
-import Loading from "../../../Loading";
+import { EffectCallback, useEffect } from "react";
 import NoData from "../../../NoData";
-import { useStore } from "../../context/store";
+
 import { GRID_VIEW } from "../../../../pages/MyProjectsPage/constants";
 import image from "../../../../assets/images/shibainu.jpeg";
 import CardProject from "../../../CardProject";
 import "./styles.scss";
+
 import { Link } from "react-router-dom";
 import { formatNumberView } from "../../../../hooks";
-import { MyProjectsContext } from "../../context";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../constant";
+import { useAccount, useContractRead } from "wagmi";
 
 interface IProps {
   typeView: string;
   id?: string;
 }
 
-const PROJECTS_DEFAULT = Array(8).fill({
-  image: image,
-  title: "Fushionist",
-  description:
-    "'Fusionist is a scalable and sustainable Sci-Fi universe with a combination of sophisticated game design and deflationary token mechanics. You can command your Bi·Mech in PvP, PvE, and even E-Sports tournaments in Fusionst to earn tokens and other NFT rewards. This NFT collection will have an exclusive coating style - Supreme Dominance, superior attributes, and a higher chance of receiving new weapons when upgrading to become more badass which can be used in Fusionist",
-  value: 150000,
-  quantity: 12,
-});
-
 function Main(props: IProps) {
   const { typeView } = props;
-  // const { state } = useStore();
+  const { address } = useAccount();
+  // Read List Project
+  const { data: listCreatedProjects }: any = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "getMemberProject",
+    args: [address],
+  });
 
-  // const { projects = PROJECTS_DEFAULT, loading } = state;
-  const { listCreatedProjects } = useContext<any>(MyProjectsContext);
-
-  console.log("listCreatedProject", listCreatedProjects);
   const useEffectDidMout = (effect: EffectCallback) => {
     useEffect(effect, []);
   };
@@ -116,13 +111,6 @@ function Main(props: IProps) {
       ) : (
         <NoData />
       )}
-      {/* {loading && (
-        <div className="absolute inset-0 bg-[#fffa]">
-          <div className="fixed top-[50%] left-[50%] translate-y-[-50%] translate-x-[-50%]">
-            <Loading height="340px" />
-          </div>
-        </div>
-      )} */}
     </div>
   );
 }

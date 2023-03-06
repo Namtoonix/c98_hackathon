@@ -5,9 +5,9 @@ interface IProps {
   id?: string;
 }
 
-function MyProjects(props: IProps) {
+function MyInvestedProjects(props: IProps) {
   const { id, typeView } = props;
   return <Main id={id} typeView={typeView} />;
 }
 
-export default MyProjects;
+export default MyInvestedProjects;

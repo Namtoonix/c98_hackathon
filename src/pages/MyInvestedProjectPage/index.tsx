@@ -1,10 +1,11 @@
 import { useState } from "react";
 import GridIcon from "../../Components/icons/GridIcon";
 import ListIcon from "../../Components/icons/ListIcon";
+import MyInvestedProjects from "../../Components/MyInvestedProjects";
 import MyProjects from "../../Components/MyProjects";
 import { GRID_VIEW, LIST_VIEW } from "./constants";
 
-const MyProjectsPage = () => {
+const MyInvestedProjectsPage = () => {
   const [typeView, setTypeView] = useState(GRID_VIEW);
 
   return (
@@ -26,10 +27,10 @@ const MyProjectsPage = () => {
         </div>
       </div> */}
       <div className="bg-transparent">
-        <MyProjects typeView={typeView} />
+        <MyInvestedProjects typeView={typeView} />
       </div>
     </div>
   );
 };
 
-export default MyProjectsPage;
+export default MyInvestedProjectsPage;
