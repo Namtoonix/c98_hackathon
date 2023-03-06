@@ -10,6 +10,8 @@ import "./styles.scss";
 import { Link } from "react-router-dom";
 import { formatNumberView } from "../../../../hooks";
 import { MyProjectsContext } from "../../context";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../constant";
+import { useAccount, useContractRead } from "wagmi";
 
 interface IProps {
   typeView: string;
@@ -27,12 +29,28 @@ const PROJECTS_DEFAULT = Array(8).fill({
 
 function Main(props: IProps) {
   const { typeView } = props;
-  // const { state } = useStore();
+  const { address } = useAccount();
 
-  // const { projects = PROJECTS_DEFAULT, loading } = state;
-  const { listCreatedProjects } = useContext<any>(MyProjectsContext);
+  // Read List Project
+  const { data: listCreatedProjects }: any = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "getOwnerProject",
+    args: [address],
+  });
 
-  console.log("listCreatedProject", listCreatedProjects);
+  // read list Project valid to vote
+
+  const { data: listValidProjects }: any = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "getOwnerProjectEligible",
+    args: [address],
+  });
+
+  console.log("listCreatedProjects", listCreatedProjects);
+  console.log("listValidProjects", listValidProjects);
+
   const useEffectDidMout = (effect: EffectCallback) => {
     useEffect(effect, []);
   };

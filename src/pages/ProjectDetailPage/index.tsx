@@ -55,42 +55,48 @@ const ProjectDetailPage = () => {
   return (
     <div className="w-full mt-[20px] py-10 px-[80px] mb-[20px]">
       <form action="#" className="form" id="form1">
-        <h2 className="form__title">Create Poll</h2>
-        <input
-          type="text"
-          name="name"
-          value={pollData.name}
-          onChange={(e) => handleChangeDataProject(e)}
-          placeholder="Project Name"
-          className="input"
-        />
-        <textarea
-          name="description"
-          placeholder="Project Description"
-          onChange={(e) => handleChangeDataProject(e)}
-          value={pollData.description}
-          className="input"
-        />
-        <input
-          type="text"
-          name="amountPerson"
-          placeholder="Project Values"
-          onChange={(e) => handleChangeDataProject(e)}
-          value={pollData.amountPerson}
-          className="input"
-        />
-        <input
-          type="text"
-          name="totalPrice"
-          placeholder="Project Quantity"
-          onChange={(e) => handleChangeDataProject(e)}
-          value={pollData.totalPrice}
-          className="input"
-        />
+        <div className="py-10">
+          <h2 className="form__title">Create Poll</h2>
+          <input
+            type="text"
+            name="name"
+            value={pollData.name}
+            onChange={(e) => handleChangeDataProject(e)}
+            placeholder="Project Name"
+            className="input"
+          />
+          <textarea
+            name="description"
+            placeholder="Project Description"
+            onChange={(e) => handleChangeDataProject(e)}
+            value={pollData.description}
+            className="input"
+          />
+          <input
+            type="text"
+            name="amountPerson"
+            placeholder="Project Values"
+            onChange={(e) => handleChangeDataProject(e)}
+            value={pollData.amountPerson}
+            className="input"
+          />
+          <input
+            type="text"
+            name="totalPrice"
+            placeholder="Project Quantity"
+            onChange={(e) => handleChangeDataProject(e)}
+            value={pollData.totalPrice}
+            className="input"
+          />
 
-        <button className="btn" type="button" onClick={() => console.log()}>
-          Create PolL
-        </button>
+          <button
+            className="btn mt-8"
+            type="button"
+            onClick={() => console.log()}
+          >
+            Create PolL
+          </button>
+        </div>
       </form>
     </div>
   );

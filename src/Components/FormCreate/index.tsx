@@ -141,7 +141,7 @@ function FormCreate() {
                 <input
                   type="text"
                   name="amountPerson"
-                  placeholder="Project Values"
+                  placeholder="Amount Person"
                   onChange={(e) => handleChangeDataProject(e)}
                   value={projectData.amountPerson}
                   className="input"
