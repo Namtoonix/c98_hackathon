@@ -1,5 +1,3 @@
-import "./styles.scss";
-
 import { useAccount, useContractRead } from "wagmi";
 import ProjectList from "../ProjectList";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../constant";

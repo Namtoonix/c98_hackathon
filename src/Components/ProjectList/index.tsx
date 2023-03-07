@@ -1,4 +1,4 @@
-import image from "../../../../assets/images/shibainu.jpeg";
+import image from "../../assets/images/shibainu.jpeg";
 import "./styles.scss";
 import { Link, useNavigate } from "react-router-dom";
 import NoData from "../NoData";

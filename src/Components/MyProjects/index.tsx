@@ -1,4 +1,3 @@
-import "./styles.scss";
 import { useAccount, useContractRead } from "wagmi";
 import ProjectList from "../ProjectList";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../constant";
@@ -21,7 +20,6 @@ function MyProjects(props: IProps) {
   });
 
   // read list Project valid to vote
-
   const { data: listValidProjects }: any = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
