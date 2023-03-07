@@ -15,7 +15,7 @@ function ProjectList(props: IProps) {
   let navigate = useNavigate();
 
   const goDetail = (id: string) => () => {
-    navigate(`${id}/detail`);
+    navigate(`/my-project/${id}/detail`);
   };
 
   return (
@@ -29,7 +29,7 @@ function ProjectList(props: IProps) {
                   key={index}
                   className="w-1/4 hover:scale-105 duration-300 cursor-pointer bg-white rounded-xl"
                 >
-                  <Link to={`${project.id}/detail`}>
+                  <Link to={`/myproject/${project.id}/detail`}>
                     <CardProject
                       data={project}
                       className="!p-[12px] border-[1px] rounded-xl"
