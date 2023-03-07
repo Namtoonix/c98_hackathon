@@ -1,5 +1,5 @@
 import "./styles.scss";
-import image from "../../assets/images/shibainu.jpeg";
+// import image from "../../assets/images/shibainu.jpeg";
 import CardProject from "../CardProject";
 import Slider from "react-slick";
 
