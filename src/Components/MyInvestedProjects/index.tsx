@@ -7,28 +7,16 @@ interface IProps {
   id?: string;
 }
 
-function MyProjects(props: IProps) {
+function MyInvestedProjectsPage(props: IProps) {
   const { typeView } = props;
   const { address } = useAccount();
-
   // Read List Project
   const { data: listCreatedProjects }: any = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
-    functionName: "getOwnerProject",
+    functionName: "getMemberProject",
     args: [address],
   });
-
-  // read list Project valid to vote
-  const { data: listValidProjects }: any = useContractRead({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: "getOwnerProjectEligible",
-    args: [address],
-  });
-
-  console.log("listCreatedProjects", listCreatedProjects);
-  console.log("listValidProjects", listValidProjects);
 
   return (
     <ProjectList
@@ -38,4 +26,4 @@ function MyProjects(props: IProps) {
   );
 }
 
-export default MyProjects;
+export default MyInvestedProjectsPage;

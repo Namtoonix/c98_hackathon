@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import "./styles.scss";
 import CardList from "../CardList";
+import { FaChartBar, FaMoneyBillAlt } from "react-icons/fa";
 import {
   useAccount,
   useContractRead,
@@ -39,8 +40,8 @@ function FormCreate() {
     args: [
       projectData.name,
       projectData.description,
-      projectData.totalPrice,
       projectData.amountPerson,
+      projectData.totalPrice,
     ],
     // onSuccess() {
     //   toast.success("Project initialization successful!");
@@ -95,7 +96,24 @@ function FormCreate() {
   console.log("projectData", projectData);
   return (
     <div className="flex h-screen flex-col">
-      <div className="flex justify-end mt-10 mr-10">
+      <div className="flex justify-end mt-10 mr-10 gap-8 items-center">
+        {isConnected && (
+          <div className="flex gap-6 items-center">
+            <a
+              href="/my-projects"
+              className="hover:scale-105 duration-300 cursor-pointer flex items-center text-[14px] gap-2  text-white"
+            >
+              <FaChartBar size={34} color={"white"} /> My Projects
+            </a>
+            <a
+              href="/my-invest-projects"
+              className="hover:scale-105 duration-300 cursor-pointer flex items-center text-[14px] gap-2 text-white"
+            >
+              <FaMoneyBillAlt size={34} color={"white"} /> My Invested Project
+            </a>
+          </div>
+        )}
+
         <CustomConnnectButton type="top" />
       </div>
 
@@ -123,7 +141,7 @@ function FormCreate() {
                 <input
                   type="text"
                   name="amountPerson"
-                  placeholder="Project Values"
+                  placeholder="Amount Person"
                   onChange={(e) => handleChangeDataProject(e)}
                   value={projectData.amountPerson}
                   className="input"

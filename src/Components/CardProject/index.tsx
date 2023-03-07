@@ -11,7 +11,7 @@ import "./styles.scss";
 declare const window: any;
 
 function CardProject(props: any) {
-  const { data, className } = props;
+  const { data, className, isOwner = false } = props;
 
   const { address } = useAccount();
 
@@ -100,12 +100,14 @@ function CardProject(props: any) {
             Contributed BNB :{" "}
             <span>{formatNumberView(data.contributePrice / 1e18)} BNB</span>
           </p>
-          <button
-            className="team-card__btn primary-btn"
-            onClick={() => handleInvest()}
-          >
-            Vote
-          </button>
+          {!isOwner && (
+            <button
+              className="team-card__btn primary-btn"
+              onClick={() => handleInvest()}
+            >
+              Vote
+            </button>
+          )}
         </div>
       </article>
     </>
