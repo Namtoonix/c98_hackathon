@@ -17,7 +17,7 @@ function App() {
       <Routes>
         <Route index element={<HomePage />} />
         <Route path="/my-projects" element={<MyProjectsPage />} />
-        <Route path="/my-projects/:id" element={<ProjectDetailPage />} />
+        <Route path="/my-projects/:id/detail" element={<ProjectDetailPage />} />
         <Route
           path="/my-invest-projects"
           element={<MyInvestedProjectsPage />}

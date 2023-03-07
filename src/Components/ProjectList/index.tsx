@@ -1,42 +1,22 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-import { EffectCallback, useEffect } from "react";
-import NoData from "../../../NoData";
-
-import { GRID_VIEW } from "../../../../pages/MyProjectsPage/constants";
 import image from "../../../../assets/images/shibainu.jpeg";
-import CardProject from "../../../CardProject";
 import "./styles.scss";
-
-import { Link } from "react-router-dom";
-import { formatNumberView } from "../../../../hooks";
-import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../../../constant";
-import { useAccount, useContractRead } from "wagmi";
+import { Link, useNavigate } from "react-router-dom";
+import NoData from "../NoData";
+import CardProject from "../CardProject";
+import { GRID_VIEW } from "../../pages/MyProjectsPage/constants";
 
 interface IProps {
+  listCreatedProjects: Array<Record<string, any>>;
   typeView: string;
-  id?: string;
 }
 
-function Main(props: IProps) {
-  const { typeView } = props;
-  const { address } = useAccount();
-  // Read List Project
-  const { data: listCreatedProjects }: any = useContractRead({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: "getMemberProject",
-    args: [address],
-  });
+function ProjectList(props: IProps) {
+  const { listCreatedProjects, typeView } = props;
+  let navigate = useNavigate();
 
-  const useEffectDidMout = (effect: EffectCallback) => {
-    useEffect(effect, []);
+  const goDetail = (id: string) => () => {
+    navigate(`${id}/detail`);
   };
-
-  useEffectDidMout(() => {
-    apiFetchList();
-  });
-
-  const apiFetchList = async () => {};
 
   return (
     <div className="relative">
@@ -49,7 +29,7 @@ function Main(props: IProps) {
                   key={index}
                   className="w-1/4 hover:scale-105 duration-300 cursor-pointer bg-white rounded-xl"
                 >
-                  <Link to={`${formatNumberView(project.id)}`}>
+                  <Link to={`${project.id}/detail`}>
                     <CardProject
                       data={project}
                       className="!p-[12px] border-[1px] rounded-xl"
@@ -74,6 +54,7 @@ function Main(props: IProps) {
                   <tr
                     key={project.id}
                     className={`border-b-[1px] border-b-[#ccc]`}
+                    onClick={goDetail(project.id)}
                   >
                     <td>
                       <div className="flex justify-center py-[8px] ">
@@ -115,4 +96,4 @@ function Main(props: IProps) {
   );
 }
 
-export default Main;
+export default ProjectList;
