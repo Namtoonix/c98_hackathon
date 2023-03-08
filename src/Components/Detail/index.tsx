@@ -33,7 +33,11 @@ function Detail() {
     args: [params?.id],
   });
 
-  console.log(project);
+  const { data: projectsVote }: any = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "getProjectsVote",
+  });
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -105,7 +109,14 @@ function Detail() {
           Create Poll
         </button>
 
-        {/* <PollList listPoll={DEFAULT_PROJECT.polls} /> */}
+        <PollList
+          listPoll={projectsVote?.filter(
+            (item: any) =>
+              Number(
+                (ethers.utils.formatEther(item?.projectId) as any) * 1e18
+              ) === Number(params.id)
+          )}
+        />
 
         <ModalForm
           id={Number(params.id)}
