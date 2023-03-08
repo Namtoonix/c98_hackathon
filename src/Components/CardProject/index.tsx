@@ -57,8 +57,6 @@ function CardProject(props: any) {
   //   write: investProject,
   // } = useContractWrite(configLong);
 
-  console.log(data.contributePerson);
-
   const handleInvest = async () => {
     if (data.seler === address) {
       toast.error("Owner can't join!");
@@ -100,14 +98,19 @@ function CardProject(props: any) {
           <p className="team-card__mail">
             Max person: <span>{formatNumberView(data.amountPerson)}</span>
           </p>
-          <p className="team-card__mail">
-            Contributed person:{" "}
-            <span>{formatNumberView(data.contributePerson)}</span>
-          </p>
-          <p className="team-card__mail">
-            Contributed BNB :{" "}
-            <span>{ethers.utils.formatEther(data.contributePrice)} BNB</span>
-          </p>
+          {data?.contributePerson && (
+            <p className="team-card__mail">
+              Contributed person:{" "}
+              <span>{formatNumberView(data.contributePerson)}</span>
+            </p>
+          )}
+
+          {data?.contributePrice && (
+            <p className="team-card__mail">
+              Contributed BNB :{" "}
+              <span>{ethers.utils.formatEther(data.contributePrice)} BNB</span>
+            </p>
+          )}
           {!isOwner && (
             <button
               className="team-card__btn primary-btn"
