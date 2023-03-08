@@ -12,6 +12,7 @@ import {
 import CustomConnnectButton from "../CustomConnectButton";
 import { CONTRACT_ADDRESS, CONTRACT_ABI } from "../../constant";
 import { toast } from "react-toastify";
+import { ethers } from "ethers";
 
 interface ProjectDataI {
   name: string;
@@ -41,7 +42,7 @@ function FormCreate() {
       projectData.name,
       projectData.description,
       projectData.amountPerson,
-      projectData.totalPrice,
+      (projectData.totalPrice as any) * 1e18,
     ],
     // onSuccess() {
     //   toast.success("Project initialization successful!");
@@ -76,6 +77,7 @@ function FormCreate() {
       console.log("Success", data);
     },
   });
+
 
   const container: any = useRef();
 
