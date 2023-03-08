@@ -22,7 +22,6 @@ function Detail() {
   const params = useParams();
   const [openModal, setOpenModal] = useState(false);
 
-  console.log(params);
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -64,7 +63,7 @@ function Detail() {
 
         <PollList listPoll={DEFAULT_PROJECT.polls} />
 
-        <ModalForm closeModal={handleCloseModal} modalIsOpen={openModal} />
+        <ModalForm id={Number(params.id)} closeModal={handleCloseModal} modalIsOpen={openModal} />
       </div>
     </div>
   );
