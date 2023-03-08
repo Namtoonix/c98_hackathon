@@ -1,5 +1,11 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { EffectCallback, useContext, useEffect } from "react";
+import {
+  EffectCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import Loading from "../../../Loading";
 import NoData from "../../../NoData";
 import { useStore } from "../../context/store";
@@ -48,6 +54,19 @@ function Main(props: IProps) {
     args: [address],
   });
 
+  const mappedListProjects = useMemo(() => {
+    return [
+      ...listCreatedProjects.map((project: any) => {
+        const termProject = listValidProjects.filter((validProject: any) => {
+          return project.id === validProject.id;
+        });
+
+        if (termProject.length !== 0) return { ...project, isValid: true };
+        return project;
+      }),
+    ];
+  }, [listCreatedProjects, listValidProjects]);
+
   console.log("listCreatedProjects", listCreatedProjects);
   console.log("listValidProjects", listValidProjects);
 
@@ -63,10 +82,10 @@ function Main(props: IProps) {
 
   return (
     <div className="relative">
-      {listCreatedProjects?.length ? (
+      {mappedListProjects?.length ? (
         typeView === GRID_VIEW ? (
           <div className="flex flex-wrap">
-            {listCreatedProjects.map(
+            {mappedListProjects.map(
               (project: Record<string, any>, index: number) => (
                 <div
                   key={index}
@@ -77,6 +96,7 @@ function Main(props: IProps) {
                       data={project}
                       className="!p-[12px] border-[1px] rounded-xl"
                       isOwner
+                      isValid
                     />
                   </Link>
                 </div>

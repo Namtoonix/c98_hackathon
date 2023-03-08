@@ -11,7 +11,7 @@ import "./styles.scss";
 declare const window: any;
 
 function CardProject(props: any) {
-  const { data, className, isOwner = false } = props;
+  const { data, className, isOwner = false, isValid = false } = props;
 
   const { address } = useAccount();
 
