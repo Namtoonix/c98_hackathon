@@ -76,6 +76,14 @@ const ModalForm = (props: IProps) => {
             value={pollData.amountPerson}
             className="input"
           />
+          <input
+            type="text"
+            name="totalPrice"
+            placeholder="Poll Quantity"
+            onChange={(e) => handleChangeDataProject(e)}
+            value={pollData.totalPrice}
+            className="input"
+          />
 
           <button
             className="btn mt-8"
