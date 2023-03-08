@@ -15,7 +15,7 @@ function ProjectList(props: IProps) {
   let navigate = useNavigate();
 
   const goDetail = (id: string) => () => {
-    navigate(`/my-project/${id}/detail`);
+    navigate(`/my-projects/${id}/detail`);
   };
 
   return (

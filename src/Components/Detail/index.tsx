@@ -30,7 +30,7 @@ function Detail() {
 
   return (
     <div className="relative flex flex-wrap items-center overflow-hidden lg:mx-0 mx-[-8px] bg-[#000]">
-      <div className="relative">
+      <div className="relative w-full">
         <img
           width="100%"
           src={`https://image.tmdb.org/t/p/original//9Rq14Eyrf7Tu1xk0Pl7VcNbNh1n.jpg`}

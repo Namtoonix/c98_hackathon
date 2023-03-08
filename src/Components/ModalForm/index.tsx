@@ -58,12 +58,12 @@ const ModalForm = (props: IProps) => {
             name="name"
             value={pollData.name}
             onChange={(e) => handleChangeDataProject(e)}
-            placeholder="Project Name"
+            placeholder="Poll Name"
             className="input"
           />
           <textarea
             name="description"
-            placeholder="Project Description"
+            placeholder="Poll Description"
             onChange={(e) => handleChangeDataProject(e)}
             value={pollData.description}
             className="input"
@@ -71,17 +71,9 @@ const ModalForm = (props: IProps) => {
           <input
             type="text"
             name="amountPerson"
-            placeholder="Project Values"
+            placeholder="Poll Values"
             onChange={(e) => handleChangeDataProject(e)}
             value={pollData.amountPerson}
-            className="input"
-          />
-          <input
-            type="text"
-            name="totalPrice"
-            placeholder="Project Quantity"
-            onChange={(e) => handleChangeDataProject(e)}
-            value={pollData.totalPrice}
             className="input"
           />
 
