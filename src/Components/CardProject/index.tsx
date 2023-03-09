@@ -8,11 +8,12 @@ import { toast } from "react-toastify";
 
 import "./styles.scss";
 import { ethers } from "ethers";
+import { FaGrinBeamSweat } from "react-icons/fa";
 
 declare const window: any;
 
 function CardProject(props: any) {
-  const { data, className, isOwner = false, isValid = false } = props;
+  const { data, className, isViewer = false, isValid = false } = props;
 
   const { address } = useAccount();
 
@@ -79,7 +80,9 @@ function CardProject(props: any) {
 
   return (
     <>
-      <article className={`team-card ${className}`}>
+      <article
+        className={`team-card ${className} ${isValid ? "opacity-60" : ""}`}
+      >
         <div className="team-card__img-box">
           <img
             className="team-card__img"
@@ -111,14 +114,20 @@ function CardProject(props: any) {
               <span>{ethers.utils.formatEther(data.contributePrice)} BNB</span>
             </p>
           )}
-          {!isOwner && (
-            <button
-              className="team-card__btn primary-btn"
-              onClick={() => handleInvest()}
-            >
-              Vote
-            </button>
-          )}
+          {!isViewer &&
+            (isValid ? (
+              <div className="mx-auto mt-4">
+                <FaGrinBeamSweat size={40} color="#DF7857" />
+                <span className="text-[#F16767] mt-2">Fulled</span>
+              </div>
+            ) : (
+              <button
+                className="team-card__btn primary-btn"
+                onClick={() => handleInvest()}
+              >
+                Vote
+              </button>
+            ))}
         </div>
       </article>
     </>

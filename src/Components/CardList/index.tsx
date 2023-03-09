@@ -2,6 +2,8 @@ import "./styles.scss";
 // import image from "../../assets/images/shibainu.jpeg";
 import CardProject from "../CardProject";
 import Slider from "react-slick";
+import { ethers } from "ethers";
+import { formatNumberView } from "../../hooks";
 
 // const PROJECTS_DEFAULT = Array(4).fill({
 //   image: image,
@@ -14,9 +16,13 @@ import Slider from "react-slick";
 
 function CardList(cards: any) {
   const renderProjects = () => {
-    return cards?.cards?.map((item: any, index : number) => (
-      <CardProject data={item} key={index} />
-    ));
+    return cards?.cards?.map((item: any, index: number) => {
+      const isValid =
+        formatNumberView(item.amountPerson) ===
+        formatNumberView(item.contributePerson);
+
+      return <CardProject data={item} key={index} isValid={isValid} />;
+    });
   };
 
   const MySlider: any = Slider;

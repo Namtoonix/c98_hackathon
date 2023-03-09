@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import ModalForm from "../ModalForm";
 import Percent from "../Percent";
 import PollList from "../PollList";
-import { useContractRead } from "wagmi";
+import { useAccount, useContractRead } from "wagmi";
 import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../constant";
 import { ethers } from "ethers";
 import { formatNumberView } from "../../hooks";
@@ -25,12 +25,19 @@ const DEFAULT_PROJECT = {
 function Detail() {
   const params = useParams();
   const [openModal, setOpenModal] = useState(false);
+  const { address } = useAccount();
+  const [isOwner, setIsOwner] = useState<boolean>(false);
 
   const { data: project }: any = useContractRead({
     address: CONTRACT_ADDRESS,
     abi: CONTRACT_ABI,
     functionName: "getProject",
     args: [params?.id],
+    onSuccess(data: any) {
+      if (data.seler === address) {
+        setIsOwner(true);
+      }
+    },
   });
 
   const { data: projectsVote }: any = useContractRead({
@@ -38,6 +45,9 @@ function Detail() {
     abi: CONTRACT_ABI,
     functionName: "getProjectsVote",
   });
+
+  console.log("project", project);
+  console.log("projectsVote", projectsVote);
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -102,12 +112,14 @@ function Detail() {
           </>
         )}
 
-        <button
-          className="team-card__btn primary-btn"
-          onClick={() => setOpenModal(true)}
-        >
-          Create Poll
-        </button>
+        {isOwner && (
+          <button
+            className="team-card__btn primary-btn"
+            onClick={() => setOpenModal(true)}
+          >
+            Create Poll
+          </button>
+        )}
 
         <PollList
           listPoll={projectsVote?.filter(
@@ -116,6 +128,7 @@ function Detail() {
                 (ethers.utils.formatEther(item?.projectId) as any) * 1e18
               ) === Number(params.id)
           )}
+          isOwner={isOwner}
         />
 
         <ModalForm

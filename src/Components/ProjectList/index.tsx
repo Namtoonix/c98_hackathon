@@ -29,11 +29,11 @@ function ProjectList(props: IProps) {
                   key={index}
                   className="w-1/4 hover:scale-105 duration-300 cursor-pointer bg-white rounded-xl"
                 >
-                  <Link to={`/myproject/${project.id}/detail`}>
+                  <Link to={`/my-projects/${project.id}/detail`}>
                     <CardProject
                       data={project}
                       className="!p-[12px] border-[1px] rounded-xl"
-                      isOwner
+                      isViewer
                     />
                   </Link>
                 </div>

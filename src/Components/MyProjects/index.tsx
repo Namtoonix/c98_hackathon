@@ -19,19 +19,21 @@ function MyProjects(props: IProps) {
     args: [address],
   });
 
-  // read list Project valid to vote
-  const { data: listValidProjects }: any = useContractRead({
-    address: CONTRACT_ADDRESS,
-    abi: CONTRACT_ABI,
-    functionName: "getOwnerProjectEligible",
-    args: [address],
-  });
+  // // read list Project valid to vote
+  // const { data: listValidProjects }: any = useContractRead({
+  //   address: CONTRACT_ADDRESS,
+  //   abi: CONTRACT_ABI,
+  //   functionName: "getOwnerProjectEligible",
+  //   args: [address],
+  // });
 
-  console.log("listValidProjects", listValidProjects);
+  // console.log("listValidProjects", listValidProjects);
 
   return (
     <ProjectList
-      listCreatedProjects={listValidProjects?.filter((item:any) => item?.name)}
+      listCreatedProjects={listCreatedProjects?.filter(
+        (item: any) => item?.name
+      )}
       typeView={typeView}
     />
   );

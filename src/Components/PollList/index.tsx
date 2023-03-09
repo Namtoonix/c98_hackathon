@@ -8,10 +8,11 @@ declare const window: any;
 
 interface IProps {
   listPoll: Array<Record<string, any>>;
+  isOwner?: boolean;
 }
 
 function PollList(props: IProps) {
-  const { listPoll } = props;
+  const { listPoll, isOwner } = props;
 
   //  //Create project
   //  const { config: configLong } = usePrepareContractWrite({
@@ -56,7 +57,7 @@ function PollList(props: IProps) {
         <th className="w-[30%] py-[8px]">Expiration date</th>
         <th className="w-[15%] py-[8px]">Value</th>
         <th className="w-[15%] py-[8px]">Status</th>
-        <th className="w-[20%] py-[8px]">Action</th>
+        {!isOwner && <th className="w-[20%] py-[8px]">Action</th>}
       </tr>
       {listPoll?.map((poll: Record<string, any>, index: number) => (
         <tr key={index} className={`border-b-[1px] border-b-[#ccc]`}>
@@ -84,33 +85,39 @@ function PollList(props: IProps) {
               </span>
             </div>
           </td>
-          <td>
-            <div className="flex justify-center gap-2 py-[8px]">
-              <span
-                className="cursor-pointer"
-                onClick={() =>
-                  handeVote(
-                    Number((ethers.utils.formatEther(poll?.id) as any) * 1e18),
-                    1
-                  )
-                }
-              >
-                Yes{" "}
-              </span>{" "}
-              <span
-                className="cursor-pointer"
-                onClick={() =>
-                  handeVote(
-                    Number((ethers.utils.formatEther(poll?.id) as any) * 1e18),
-                    0
-                  )
-                }
-              >
-                {" "}
-                No
-              </span>
-            </div>
-          </td>
+          {!isOwner && (
+            <td>
+              <div className="flex justify-center gap-2 py-[8px]">
+                <span
+                  className="cursor-pointer"
+                  onClick={() =>
+                    handeVote(
+                      Number(
+                        (ethers.utils.formatEther(poll?.id) as any) * 1e18
+                      ),
+                      1
+                    )
+                  }
+                >
+                  Yes{" "}
+                </span>{" "}
+                <span
+                  className="cursor-pointer"
+                  onClick={() =>
+                    handeVote(
+                      Number(
+                        (ethers.utils.formatEther(poll?.id) as any) * 1e18
+                      ),
+                      0
+                    )
+                  }
+                >
+                  {" "}
+                  No
+                </span>
+              </div>
+            </td>
+          )}
         </tr>
       ))}
     </table>
