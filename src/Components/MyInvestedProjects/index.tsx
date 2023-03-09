@@ -17,6 +17,9 @@ function MyInvestedProjectsPage(props: IProps) {
     functionName: "getMemberProject",
     args: [address],
   });
+  
+
+  console.log("ahjsvdasjhdbasjk : ", listCreatedProjects)
 
   return (
     <ProjectList

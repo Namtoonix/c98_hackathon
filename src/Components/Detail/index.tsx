@@ -3,6 +3,10 @@ import { useParams } from "react-router-dom";
 import ModalForm from "../ModalForm";
 import Percent from "../Percent";
 import PollList from "../PollList";
+import { useContractRead } from "wagmi";
+import { CONTRACT_ABI, CONTRACT_ADDRESS } from "../../constant";
+import { ethers } from "ethers";
+import { formatNumberView } from "../../hooks";
 
 const DEFAULT_PROJECT = {
   title: "Fushionist",
@@ -22,7 +26,18 @@ function Detail() {
   const params = useParams();
   const [openModal, setOpenModal] = useState(false);
 
-  console.log(params);
+  const { data: project }: any = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "getProject",
+    args: [params?.id],
+  });
+
+  const { data: projectsVote }: any = useContractRead({
+    address: CONTRACT_ADDRESS,
+    abi: CONTRACT_ABI,
+    functionName: "getProjectsVote",
+  });
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -30,30 +45,62 @@ function Detail() {
 
   return (
     <div className="relative flex flex-wrap items-center overflow-hidden lg:mx-0 mx-[-8px] bg-[#000]">
-      <div className="relative">
+      <div className="relative w-full">
         <img
           width="100%"
           src={`https://image.tmdb.org/t/p/original//9Rq14Eyrf7Tu1xk0Pl7VcNbNh1n.jpg`}
-          alt={DEFAULT_PROJECT.title}
+          alt={project?.name}
           className="object-cover opacity-70"
         />
         <img
           className="absolute h-[90%] top-[50%] translate-y-[-50%] z-[3] rounded-[8px] shadow-xl ml-[8px]"
           src={`https://image.tmdb.org/t/p/original/qi9r5xBgcc9KTxlOLjssEbDgO0J.jpg`}
-          alt={DEFAULT_PROJECT.title}
+          alt={project?.name}
         />
         <div className="absolute bg-[#00000090] inset-0 z-[2]"></div>
       </div>
       <div className="lg:w-1/2 w-full lg:absolute relative z-[4] lg:top-[50%] lg:translate-y-[-50%] lg:left-[50%] lg:ml-auto px-[8px] lg:mt-0 mt-[20px] pb-[20px] pr-[20px]">
         <h2 className="lg:text-[36px] text-[18px] font-[700] text-white">
-          {DEFAULT_PROJECT.title}{" "}
+          {project?.name}{" "}
         </h2>
         <div className="flex items-center">
-          <Percent percent={Math.round(Number(8) * 10)} />
+          <Percent percent={Math.round(Number(10) * 10)} />
           <span className="ml-[12px] text-white font-[700]">Process</span>
         </div>
-        <p className="font-[600] text-white text-[20px] mt-[20px]">Overview</p>
-        <p className="text-white text-[16px]">{DEFAULT_PROJECT.description}</p>
+        <p className="font-[600] text-white text-[20px] mt-[20px]">
+          Description
+        </p>
+        <p className="text-white text-[16px]">{project?.description}</p>
+
+        {project && (
+          <>
+            <p className="font-[600] text-white text-[20px] mt-[20px]">Total</p>
+            <p className="text-white text-[16px]">
+              {ethers.utils.formatEther(project?.totalPrice)} BNB
+            </p>
+
+            <p className="font-[600] text-white text-[20px] mt-[20px]">
+              Max person
+            </p>
+            <p className="text-white text-[16px]">
+              {formatNumberView(project?.amountPerson)}
+            </p>
+
+            <p className="font-[600] text-white text-[20px] mt-[20px]">
+              Contributed person
+            </p>
+            <p className="text-white text-[16px]">
+              {formatNumberView(project?.contributePerson)}
+            </p>
+
+            <p className="font-[600] text-white text-[20px] mt-[20px]">
+              Contributed BNB
+            </p>
+            <p className="text-white text-[16px]">
+              {ethers.utils.formatEther(project?.contributePrice)} BNB
+            </p>
+          </>
+        )}
 
         <button
           className="team-card__btn primary-btn"
@@ -62,9 +109,20 @@ function Detail() {
           Create Poll
         </button>
 
-        <PollList listPoll={DEFAULT_PROJECT.polls} />
+        <PollList
+          listPoll={projectsVote?.filter(
+            (item: any) =>
+              Number(
+                (ethers.utils.formatEther(item?.projectId) as any) * 1e18
+              ) === Number(params.id)
+          )}
+        />
 
-        <ModalForm closeModal={handleCloseModal} modalIsOpen={openModal} />
+        <ModalForm
+          id={Number(params.id)}
+          closeModal={handleCloseModal}
+          modalIsOpen={openModal}
+        />
       </div>
     </div>
   );

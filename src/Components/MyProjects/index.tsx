@@ -27,12 +27,11 @@ function MyProjects(props: IProps) {
     args: [address],
   });
 
-  console.log("listCreatedProjects", listCreatedProjects);
   console.log("listValidProjects", listValidProjects);
 
   return (
     <ProjectList
-      listCreatedProjects={listCreatedProjects}
+      listCreatedProjects={listValidProjects?.filter((item:any) => item?.name)}
       typeView={typeView}
     />
   );

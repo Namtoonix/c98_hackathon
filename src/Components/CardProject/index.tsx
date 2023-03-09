@@ -7,6 +7,7 @@ import { formatNumberView } from "../../hooks";
 import { toast } from "react-toastify";
 
 import "./styles.scss";
+import { ethers } from "ethers";
 
 declare const window: any;
 
@@ -27,11 +28,13 @@ function CardProject(props: any) {
   useEffect(() => {
     setVoteData({
       projectId: Number(formatNumberView(data?.id)),
-      price: Number(
-        Number(formatNumberView(data?.totalPrice / data.amountPerson)).toFixed(
-          2
-        )
-      ),
+      price:
+        (ethers.utils.formatEther(data.totalPrice) as any) / data.amountPerson,
+      //  Number(
+      //   Number(formatNumberView(data?.totalPrice / data.amountPerson)).toFixed(
+      //     2
+      //   )
+      // ),
     });
   }, [data]);
 
@@ -58,13 +61,16 @@ function CardProject(props: any) {
     if (data.seler === address) {
       toast.error("Owner can't join!");
       return;
-    } else if (data.contributePerson === data.amountPerson) {
+    } else if (
+      ethers.utils.formatEther(data.contributePerson) ===
+      ethers.utils.formatEther(data.amountPerson)
+    ) {
       toast.error("The project is full of people!");
       return;
     }
     await contract.methods
       //investProject(projectId, price)
-      .investProject(voteData?.projectId, (voteData?.price as number) * 100)
+      .investProject(voteData?.projectId, (voteData?.price as number) * 1e18)
       .send({
         from: address,
         value: (voteData?.price as number) * 1000000000000000000,
@@ -87,19 +93,24 @@ function CardProject(props: any) {
           </hgroup>
           <p className="team-card__desc">{data.description}</p>
           <p className="team-card__mail">
-            Total: <span>{formatNumberView(data.totalPrice)} BNB</span>
+            Total: <span>{ethers.utils.formatEther(data.totalPrice)} BNB</span>
           </p>
           <p className="team-card__mail">
             Max person: <span>{formatNumberView(data.amountPerson)}</span>
           </p>
-          <p className="team-card__mail">
-            Contributed person:{" "}
-            <span>{formatNumberView(data.contributePerson)}</span>
-          </p>
-          <p className="team-card__mail">
-            Contributed BNB :{" "}
-            <span>{formatNumberView(data.contributePrice / 1e18)} BNB</span>
-          </p>
+          {data?.contributePerson && (
+            <p className="team-card__mail">
+              Contributed person:{" "}
+              <span>{formatNumberView(data.contributePerson)}</span>
+            </p>
+          )}
+
+          {data?.contributePrice && (
+            <p className="team-card__mail">
+              Contributed BNB :{" "}
+              <span>{ethers.utils.formatEther(data.contributePrice)} BNB</span>
+            </p>
+          )}
           {!isOwner && (
             <button
               className="team-card__btn primary-btn"
